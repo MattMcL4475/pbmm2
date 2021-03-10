@@ -47,6 +47,18 @@ std::string SampleNames::SanitizeFileInfix(const std::string& in)
     return sanitizedName;
 }
 
+std::string SampleNames::SanitizeCommandLineArgs(const std::string& in)
+{
+    std::string sanitizedName;
+    for (const char& c : in) {
+        if (c == '\t')
+            sanitizedName += ' ';
+        else
+            sanitizedName += c;
+    }
+    return sanitizedName;
+}
+
 MovieToSampleToInfix SampleNames::DetermineMovieToSampleToInfix(const UserIO& uio)
 {
     MovieToSampleToInfix movieNameToSampleAndInfix;
@@ -207,8 +219,8 @@ BAM::BamHeader SampleNames::GenerateBamHeader(const AlignSettings& settings, con
         hdr->AddReadGroup(rg);
     }
     const auto version = PacBio::Pbmm2Version() + " (commit " + PacBio::Pbmm2GitSha1() + ")";
-    auto pg = BAM::ProgramInfo("pbmm2").Name("pbmm2").Version(version).CommandLine("pbmm2 " +
-                                                                                   settings.CLI);
+    auto clArgs = SanitizeCommandLineArgs(settings.CLI);
+    auto pg = BAM::ProgramInfo("pbmm2").Name("pbmm2").Version(version).CommandLine("pbmm2 " + clArgs);
     hdr->AddProgram(pg);
     return hdr->DeepCopy();
 }

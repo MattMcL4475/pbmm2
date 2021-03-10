@@ -20,6 +20,7 @@ class SampleNames
 public:
     static std::string SanitizeSampleName(const std::string& in);
     static std::string SanitizeFileInfix(const std::string& in);
+    static std::string SanitizeCommandLineArgs(const std::string& in)
     static MovieToSampleToInfix DetermineMovieToSampleToInfix(const UserIO& uio);
     static BAM::BamHeader GenerateBamHeader(const AlignSettings& settings, const UserIO& uio,
                                             const MovieToSampleToInfix& mtsti,
