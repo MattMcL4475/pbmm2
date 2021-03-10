@@ -49,14 +49,14 @@ std::string SampleNames::SanitizeFileInfix(const std::string& in)
 
 std::string SampleNames::SanitizeCommandLineArgs(const std::string& in)
 {
-    std::string sanitizedName;
+    std::string sanitizedArgs;
     for (const char& c : in) {
         if (c == '\t')
-            sanitizedName += ' ';
+            sanitizedArgs += ' ';
         else
-            sanitizedName += c;
+            sanitizedArgs += c;
     }
-    return sanitizedName;
+    return sanitizedArgs;
 }
 
 MovieToSampleToInfix SampleNames::DetermineMovieToSampleToInfix(const UserIO& uio)
